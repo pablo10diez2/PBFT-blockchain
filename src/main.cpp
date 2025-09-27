@@ -1,23 +1,19 @@
 #include <iostream>
+#include <cassert>
 
-struct prePrepare{
-    int v;
-    int n;
-    size_t d;
-    bool bit;
+enum class MessageType{
+    REQUEST
 };
 
-struct prepare{
-    int v;
-    int n;
-    size_t d;
-
+struct Request{
+    enum MessageType messageType = MessageType::REQUEST;
 };
-
-struct 
 
 int main(){
-    std::cout<<"Hello!"<<std::endl;
+    Request r1 = {};
+    Request r2 = {};
     
+    assert(r1.messageType ==r2.messageType);
+
     return 0;
 }
