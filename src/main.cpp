@@ -7,13 +7,13 @@ enum class MessageType{
 
 struct Request{
     enum MessageType messageType = MessageType::REQUEST;
+    bool operation;
+    unsigned int timestamp;
+    unsigned short clientId;
 };
 
 int main(){
     Request r1 = {};
-    Request r2 = {};
-    
-    assert(r1.messageType ==r2.messageType);
 
     return 0;
 }
