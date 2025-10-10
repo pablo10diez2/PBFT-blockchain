@@ -44,3 +44,10 @@ bool Node::getIsPrimary(){
 bool Node::getIsFaulty(){
     return this->isFaulty;
 }
+
+void Node::print(){
+    std::cout<<"Service state: "<<this->getServiceState() << ", Node id: "<< this->getNodeId() 
+    << ", Current view: "<<this->getView() << ", Primary: "<<this->getIsPrimary() << ", Faulty: "
+        << this->getIsFaulty()<<std::endl;
+}
+

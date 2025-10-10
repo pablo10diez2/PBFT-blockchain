@@ -4,31 +4,31 @@
 #include "node.h"
 
 unsigned int currentView = 1;
+unsigned int totalNodes = 10;
+
+void initializeNodes(std::vector<Node>& nodes);
 
 int main(){
-    std::vector<Node*> nodes;
-    nodes.reserve(4);
-    
-    std::cout<< nodes.size() <<std::endl;
-    
-    Node node1(State::request, 0, currentView);
-    Node node2(State::request, 1, currentView);
-    Node node3(State::request, 2, currentView);
-    Node node4(State::request, 3, currentView);
+    std::vector<Node> nodes;
+    initializeNodes(nodes);
 
-    unsigned int primaryId = [&nodes] { return currentView % nodes.capacity(); }();
-    
-    nodes.push_back(&node1);
-    nodes.push_back(&node2);
-    nodes.push_back(&node3);
-    nodes.push_back(&node4);
+    for(auto & node : nodes){
+        node.print();
+    }
+}
 
-    nodes[primaryId-1]->setIsFaulty(true);
+void initializeNodes(std::vector<Node>& nodes){
+    unsigned int faultyNodes = totalNodes % 3;
 
-    for(int i = 0; i < nodes.size(); ++i){
-        std::cout<<"Service state: "<<nodes[i]->getServiceState() << ", Node id: "<< nodes[i]->getNodeId() 
-        << ", Current view: "<<nodes[i]->getView() << ", Primary: "<<nodes[i]->getIsPrimary() << ", Faulty: "
-        << nodes[i]->getIsFaulty()<<std::endl;
+    for (int i=0; i<totalNodes; ++i){   
+        nodes.emplace_back(State::request, i, currentView);
     }
 
+    for (int i=totalNodes-faultyNodes; i<totalNodes; ++i){
+        nodes[i].setIsFaulty(true);
+    }
+    
+    unsigned int primaryId = [&nodes] { return currentView % nodes.size(); }();
+
+    nodes[primaryId].setIsPrimary(true);
 }

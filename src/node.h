@@ -1,8 +1,8 @@
 #pragma once
 
-#include "message.h"
 #include <string>
 #include <vector>
+#include <iostream>
 
 enum State {
     request, prePrepare, prepare
@@ -31,5 +31,7 @@ class Node {
         unsigned int getView();
         bool getIsPrimary();
         bool getIsFaulty();
+
+        void print();
 
 };
