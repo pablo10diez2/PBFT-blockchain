@@ -1,21 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-
-enum State {
-    request, prePrepare, prepare
-};
-
-struct Node{
-    State serviceState;
-    unsigned int nodeId;
-    unsigned int view;
-    bool primary;
-    bool faulty;
-
-    Node(State serviceS, int id, int vw, bool py, bool ft) : 
-        serviceState(serviceS), nodeId(id), view(vw), primary(py), faulty(ft) {}
-};
+#include "node.h"
 
 unsigned int currentView = 1;
 
@@ -25,10 +11,10 @@ int main(){
     
     std::cout<< nodes.size() <<std::endl;
     
-    Node node1(State::request, 0, currentView, true, false);
-    Node node2(State::request, 1, currentView, false, false);
-    Node node3(State::request, 2, currentView, false, false);
-    Node node4(State::request, 3, currentView, false, false);
+    Node node1(State::request, 0, currentView);
+    Node node2(State::request, 1, currentView);
+    Node node3(State::request, 2, currentView);
+    Node node4(State::request, 3, currentView);
 
     unsigned int primaryId = [&nodes] { return currentView % nodes.capacity(); }();
     
@@ -37,12 +23,12 @@ int main(){
     nodes.push_back(&node3);
     nodes.push_back(&node4);
 
-    nodes[primaryId-1]->faulty = 1;
+    nodes[primaryId-1]->setIsFaulty(true);
 
     for(int i = 0; i < nodes.size(); ++i){
-        std::cout<<"Service state: "<<nodes[i]->serviceState << ", Node id: "<< nodes[i]->nodeId 
-        << ", Current view: "<<nodes[i]->view << ", Primary: "<<nodes[i]->primary << ", Faulty: "
-        << nodes[i]->faulty<<std::endl;
+        std::cout<<"Service state: "<<nodes[i]->getServiceState() << ", Node id: "<< nodes[i]->getNodeId() 
+        << ", Current view: "<<nodes[i]->getView() << ", Primary: "<<nodes[i]->getIsPrimary() << ", Faulty: "
+        << nodes[i]->getIsFaulty()<<std::endl;
     }
 
 }
