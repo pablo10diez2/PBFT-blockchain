@@ -1,16 +1,34 @@
 #include <iostream>
 #include <thread>
+#include <vector>
 
-void print(){
-    std::cout<<"aa"<<std::endl;
-}
+enum State {
+    request, prePrepare, prepare
+};
+
+struct Node{
+    State serviceState;
+    unsigned int nodeId;
+    unsigned int view;
+    bool primary;
+    bool faulty;
+
+    Node(State serviceS, int id, int vw, bool py) : 
+        serviceState(serviceS), nodeId(id), view(vw), primary(py) {}
+};
 
 int main(){
-    std::thread server (print);
-    std::thread client (print);
+    std::vector<Node> nodes;
+    nodes.reserve(4);
+    
+    Node node1(State::request, 0, 0, true, false);
+    Node node2(State::request, 1, 0, false, false);
+    Node node3(State::request, 2, 0, false, false);
+    Node node4(State::request, 3, 0, false, false);
 
-    server.join();
-    client.join();
+    nodes.push_back(node1);
+    nodes.push_back(node2);
+    nodes.push_back(node3);
+    nodes.push_back(node4);
 
-    return 0;
 }
