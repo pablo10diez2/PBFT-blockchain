@@ -17,6 +17,14 @@ int main(){
         node.print();
     }
 
+    std::vector<Request> requests;
+    requests.emplace_back(false, 1, 1);
+    requests.emplace_back(true, 3, 1);
+
+    for(auto & request : requests){
+        request.print();
+    }
+
 }
 
 void initializeNodes(std::vector<Node>& nodes){

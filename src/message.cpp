@@ -35,6 +35,7 @@ unsigned int Request::getClientId(){
 }
 
 void Request::print(){
-    std::cout << "Type: Request"<< ", Operation: " << this->getOperation() << ", Timestamp: " <<
-        this->getTimestamp() << ", ClientId: " << this->getClientId() << std::endl;
+    std::cout << "MessageId: " << this->Message::getMessageId() <<", Type: Request"<< ", Operation: "
+    << this->getOperation() << ", Timestamp: " << this->getTimestamp() 
+    << ", ClientId: " << this->getClientId() << std::endl;
 }
