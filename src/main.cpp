@@ -2,6 +2,7 @@
 #include <thread>
 #include <vector>
 #include "node.h"
+#include "message.h"
 
 unsigned int currentView = 1;
 unsigned int totalNodes = 10;
@@ -15,6 +16,7 @@ int main(){
     for(auto & node : nodes){
         node.print();
     }
+
 }
 
 void initializeNodes(std::vector<Node>& nodes){
