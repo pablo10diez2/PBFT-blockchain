@@ -25,6 +25,14 @@ int main(){
         request.print();
     }
 
+    std::vector<PrePrepare> prePrepares;
+    prePrepares.emplace_back(1, 11, 15);
+    prePrepares.emplace_back(1, 11, 14);
+
+    for(auto & prePrepare : prePrepares){
+        prePrepare.print();
+    }
+
 }
 
 void initializeNodes(std::vector<Node>& nodes){
