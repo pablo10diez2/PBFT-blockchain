@@ -2,7 +2,12 @@
 #include <thread>
 #include <vector>
 #include "node.h"
-#include "message.h"
+#include "messageClass/message.h"
+#include "messageClass/request.h"
+#include "messageClass/preprepare.h"
+#include "messageClass/prepare.h"
+#include "messageClass/commit.h"
+#include "messageClass/reply.h"
 #include "client.h"
 
 unsigned int currentView = 1;
