@@ -29,10 +29,17 @@ int main(){
         prePrepare.print();
     }
 
+    std::vector<Prepare> prepares;
+    prepares.emplace_back(1, 11, 15, 14);
+    prepares.emplace_back(1, 11, 10, 13);
+
+    for(auto & prepare: prepares){
+        prepare.print();
+    }
+
     Client client1;
     client1.addRequest(request1);
     client1.addRequest(request2);
-
     client1.print();
 
 }
