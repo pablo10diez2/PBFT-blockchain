@@ -3,6 +3,7 @@
 #include <vector>
 #include "node.h"
 #include "message.h"
+#include "client.h"
 
 unsigned int currentView = 1;
 unsigned int totalNodes = 10;
@@ -16,14 +17,9 @@ int main(){
     for(auto & node : nodes){
         node.print();
     }
-
-    std::vector<Request> requests;
-    requests.emplace_back(false, 1, 1);
-    requests.emplace_back(true, 3, 1);
-
-    for(auto & request : requests){
-        request.print();
-    }
+    
+    Request request1(false, 1, 1);
+    Request request2(true, 3, 1);
 
     std::vector<PrePrepare> prePrepares;
     prePrepares.emplace_back(1, 11, 15);
@@ -32,6 +28,12 @@ int main(){
     for(auto & prePrepare : prePrepares){
         prePrepare.print();
     }
+
+    Client client1;
+    client1.addRequest(request1);
+    client1.addRequest(request2);
+
+    client1.print();
 
 }
 
