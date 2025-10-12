@@ -47,6 +47,5 @@ void initializeNodes(std::vector<Node>& nodes){
     }
     
     unsigned int primaryId = [&nodes] { return currentView % nodes.size(); }();
-
     nodes[primaryId].setIsPrimary(true);
 }
