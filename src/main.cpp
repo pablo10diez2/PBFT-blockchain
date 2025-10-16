@@ -8,6 +8,8 @@
 #include "messageClass/prepare.h"
 #include "messageClass/commit.h"
 #include "messageClass/reply.h"
+#include "messageClass/commit.h"
+#include "messageClass/reply.h"
 #include "client.h"
 
 unsigned int currentView = 1;
