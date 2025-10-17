@@ -1,7 +1,7 @@
 #pragma once
 #include "message.h"
 
-class Reply : Message(){
+class Reply : Message{
     private:
         unsigned int nodeView;
         unsigned int timestamp;
@@ -9,7 +9,7 @@ class Reply : Message(){
         unsigned int nodeId;
         bool result;
     public:
-        Reply(unsigned int nodeView, unsigned int timestampm unsigned int clientId, unsigned int nodeId, bool result);
+        Reply(unsigned int nodeView, unsigned int timestampm, unsigned int clientId, unsigned int nodeId, bool result);
         
         void setNodeView(unsigned int nodeView);
         void setTimestamp(unsigned int timestamp);
@@ -24,4 +24,4 @@ class Reply : Message(){
         bool getResult();
 
         void print();
-}
+};

@@ -1,7 +1,7 @@
 #pragma once
 #include "message.h"
 
-class Commit : Message(){
+class Commit : Message{
     private:
         unsigned int viewNum;
         unsigned int sequenceNum;
@@ -9,7 +9,7 @@ class Commit : Message(){
         unsigned int nodeId;
 
     public:
-        Message(unsigned int viewNum, unsigned int sequenceNum, size_t messageDigest, unsigned int nodeId);
+        Commit(unsigned int viewNum, unsigned int sequenceNum, size_t messageDigest, unsigned int nodeId);
 
         void setViewNum(unsigned int viewNum);
         void setSequenceNum(unsigned int sequenceNum);
@@ -22,4 +22,4 @@ class Commit : Message(){
         unsigned int getNodeId();
 
         void print();
-}
+};
