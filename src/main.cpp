@@ -23,6 +23,7 @@ int main(){
     for(auto& node : nodes){
         node.print();
     }
+
 }
 
 void initializeNodes(std::vector<Node>* nodes, int totalNodes){
