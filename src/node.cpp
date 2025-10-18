@@ -1,16 +1,13 @@
 #include "node.h"
 
-Node::Node(State serviceState, unsigned int nodeId, unsigned int view)
-         : serviceState(serviceState), nodeId(nodeId), view(view),
-           isPrimary(false), isFaulty(false) {}
+unsigned int Node::counter = 0;
 
+Node::Node(bool isFlt, bool isPrm)
+         : serviceState(State::off), nodeId(counter++), view(0),
+           isPrimary(isPrm), isFaulty(isFlt) {}
 
 void Node::setServiceState(State serviceState){
     this->serviceState = serviceState;
-}
-
-void Node::setNodeId(unsigned int nodeId){
-    this->nodeId = nodeId;
 }
 
 void Node::setView(unsigned int view){

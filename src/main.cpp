@@ -12,56 +12,39 @@
 #include "messageClass/reply.h"
 #include "client.h"
 
-unsigned int currentView = 1;
-unsigned int totalNodes = 10;
-
-void initializeNodes(std::vector<Node>& nodes);
+void initializeNodes(std::vector<Node>* nodes, int totalNodes);
 
 int main(){
+    int totalNodes = 10;
     std::vector<Node> nodes;
-    initializeNodes(nodes);
 
-    for(auto & node : nodes){
+    initializeNodes(&nodes, totalNodes);
+
+    for(auto& node : nodes){
         node.print();
     }
-    
-    Request request1(false, 1, 1);
-    Request request2(true, 3, 1);
-
-    std::vector<PrePrepare> prePrepares;
-    prePrepares.emplace_back(1, 11, 15);
-    prePrepares.emplace_back(1, 11, 14);
-
-    for(auto & prePrepare : prePrepares){
-        prePrepare.print();
-    }
-
-    std::vector<Prepare> prepares;
-    prepares.emplace_back(1, 11, 15, 14);
-    prepares.emplace_back(1, 11, 10, 13);
-
-    for(auto & prepare: prepares){
-        prepare.print();
-    }
-
-    Client client1;
-    client1.addRequest(request1);
-    client1.addRequest(request2);
-    client1.print();
-
 }
 
-void initializeNodes(std::vector<Node>& nodes){
-    unsigned int faultyNodes = totalNodes % 3;
+void initializeNodes(std::vector<Node>* nodes, int totalNodes){
+    int faultyNodes = 10/3;
+    int workingNodes = totalNodes - faultyNodes;
 
-    for (int i=0; i<totalNodes; ++i){   
-        nodes.emplace_back(State::request, i, currentView);
+    for(int i = 0; i < faultyNodes; ++i){
+        bool isFaulty = true;
+        bool isPrimary = false;
+        nodes->emplace_back(isFaulty, isPrimary);
     }
 
-    for (int i=totalNodes-faultyNodes; i<totalNodes; ++i){
-        nodes[i].setIsFaulty(true);
+    for(int i = 0; i < workingNodes; ++i){
+        bool isFaulty = false;
+        bool isPrimary = false;
+        
+        if(i == 0){
+            nodes->emplace_back(isFaulty, !isPrimary);
+        }
+
+        else{
+            nodes->emplace_back(isFaulty, isPrimary);
+        }
     }
-    
-    unsigned int primaryId = [&nodes] { return currentView % nodes.size(); }();
-    nodes[primaryId].setIsPrimary(true);
 }
