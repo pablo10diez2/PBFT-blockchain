@@ -13,17 +13,34 @@
 #include "client.h"
 
 void initializeNodes(std::vector<Node>* nodes, int totalNodes);
+void programStart();
+void prePreparePhase();
+void prePreparePrimary();
+
+unsigned int totalNodes = 10;
+Node* primaryNode;
+
+struct Transaction{
+    Message* message;
+    int signature;
+
+    Transaction(Message* m, int s) : message(m), signature(s) {}
+};
 
 int main(){
-    int totalNodes = 10;
     std::vector<Node> nodes;
 
     initializeNodes(&nodes, totalNodes);
+
+    Commit c1 = {1, 1, 1, 1};
+
+    Transaction t(&c1, 0);
 
     for(auto& node : nodes){
         node.print();
     }
 
+    programStart();
 }
 
 void initializeNodes(std::vector<Node>* nodes, int totalNodes){
@@ -42,10 +59,23 @@ void initializeNodes(std::vector<Node>* nodes, int totalNodes){
         
         if(i == 0){
             nodes->emplace_back(isFaulty, !isPrimary);
+            primaryNode = &(nodes->back());
         }
 
         else{
             nodes->emplace_back(isFaulty, isPrimary);
         }
     }
+}
+
+void programStart(){
+    Request request = {1, 20 , 0};
+    prePreparePrimary();
+}
+
+void prePreparePhase(){
+}
+
+void prePreparePrimary(){
+    primaryNode->setSequenceNumber();
 }

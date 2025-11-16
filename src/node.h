@@ -17,6 +17,7 @@ class Node {
         bool isPrimary;
         bool isFaulty;
         std::vector<std::string> log;
+        static unsigned int sequenceNumber;
         
     public:
         Node(bool isFaulty, bool isPrimary);
@@ -25,6 +26,7 @@ class Node {
         void setView(unsigned int view);
         void setIsPrimary(bool primary);
         void setIsFaulty(bool faulty);
+        void setSequenceNumber();
 
         State getServiceState();
         unsigned int getNodeId();

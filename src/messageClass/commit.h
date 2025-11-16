@@ -1,7 +1,7 @@
 #pragma once
 #include "message.h"
 
-class Commit : Message{
+class Commit : public Message{
     private:
         unsigned int viewNum;
         unsigned int sequenceNum;

@@ -10,6 +10,5 @@ class Message{
         Message();
         
         int getMessageId();
-
         virtual void print() = 0;
 };

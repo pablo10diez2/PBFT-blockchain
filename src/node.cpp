@@ -1,6 +1,7 @@
 #include "node.h"
 
 unsigned int Node::counter = 0;
+unsigned int Node::sequenceNumber = 0;
 
 Node::Node(bool isFlt, bool isPrm)
          : serviceState(State::off), nodeId(counter++), view(0),
@@ -46,5 +47,11 @@ void Node::print(){
     std::cout<<"Service state: "<<this->getServiceState() << ", Node id: "<< this->getNodeId() 
     << ", Current view: "<<this->getView() << ", Primary: "<<this->getIsPrimary() << ", Faulty: "
         << this->getIsFaulty()<<std::endl;
+}
+
+void Node::setSequenceNumber(){
+    if(isPrimary){
+        this->sequenceNumber++;
+    }
 }
 
