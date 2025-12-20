@@ -12,13 +12,16 @@
 #include "messageClass/reply.h"
 #include "client.h"
 
+using namespace std;
+
 void initializeNodes(std::vector<Node>* nodes, int totalNodes);
-void programStart();
-void prePreparePhase();
-void prePreparePrimary();
 
 unsigned int totalNodes = 10;
 Node* primaryNode;
+
+void func(){
+    cout << "Hello from thread: " << this_thread::get_id() << endl;
+}
 
 struct Transaction{
     Message* message;
@@ -32,15 +35,13 @@ int main(){
 
     initializeNodes(&nodes, totalNodes);
 
-    Commit c1 = {1, 1, 1, 1};
-
-    Transaction t(&c1, 0);
-
     for(auto& node : nodes){
         node.print();
     }
 
-    programStart();
+    thread t(func);
+    t.join();
+
 }
 
 void initializeNodes(std::vector<Node>* nodes, int totalNodes){
@@ -66,16 +67,4 @@ void initializeNodes(std::vector<Node>* nodes, int totalNodes){
             nodes->emplace_back(isFaulty, isPrimary);
         }
     }
-}
-
-void programStart(){
-    Request request = {1, 20 , 0};
-    prePreparePrimary();
-}
-
-void prePreparePhase(){
-}
-
-void prePreparePrimary(){
-    primaryNode->setSequenceNumber();
 }

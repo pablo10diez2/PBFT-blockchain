@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "messageClass/preprepare.h"
 
 enum State {
     off, request, prePrepare, prepare
@@ -26,7 +27,7 @@ class Node {
         void setView(unsigned int view);
         void setIsPrimary(bool primary);
         void setIsFaulty(bool faulty);
-        void setSequenceNumber();
+        void setSequenceNumber(PrePrepare&);
 
         State getServiceState();
         unsigned int getNodeId();

@@ -49,9 +49,10 @@ void Node::print(){
         << this->getIsFaulty()<<std::endl;
 }
 
-void Node::setSequenceNumber(){
+void Node::setSequenceNumber(PrePrepare& prePrepare){
     if(isPrimary){
         this->sequenceNumber++;
+        prePrepare.setSequenceNum(this->sequenceNumber);
     }
 }
 
