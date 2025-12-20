@@ -1,6 +1,9 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <algorithm>
+#include <queue>
+
 #include "node.h"
 #include "messageClass/message.h"
 #include "messageClass/request.h"
@@ -14,24 +17,37 @@
 
 using namespace std;
 
-void initializeNodes(std::vector<Node>* nodes, int totalNodes);
+void initializeNodes(vector<Node>* nodes, int totalNodes);
 
 unsigned int totalNodes = 10;
 Node* primaryNode;
 
+queue<int> cola;
+
 void func(){
-    cout << "Hello from thread: " << this_thread::get_id() << endl;
+    while(true){
+        if (!cola.empty()){
+            int num = cola.front();
+            cout << "Thread number: " << this_thread::get_id() << " -> Arrived: " << num << endl;
+
+            cola.pop();
+            break;
+        }
+    }   
 }
 
-struct Transaction{
-    Message* message;
-    int signature;
+void joinAll(thread& t){
+    t.join();
+}
 
-    Transaction(Message* m, int s) : message(m), signature(s) {}
-};
+void emit(){
+    sleep(3);
+    cola.push(100);
+}
 
 int main(){
-    std::vector<Node> nodes;
+    vector<Node> nodes;
+    vector<thread> threads;
 
     initializeNodes(&nodes, totalNodes);
 
@@ -39,12 +55,19 @@ int main(){
         node.print();
     }
 
-    thread t(func);
-    t.join();
+    //for(int i = 0; i < totalNodes; ++i){
+    //    threads.push_back( thread(func) );
+    //}
 
+    thread emisor(emit);
+    thread rec(func);
+
+    rec.join();
+    emisor.join();    
+    std::for_each(threads.begin(), threads.end(), joinAll);
 }
 
-void initializeNodes(std::vector<Node>* nodes, int totalNodes){
+void initializeNodes(vector<Node>* nodes, int totalNodes){
     int faultyNodes = 10/3;
     int workingNodes = totalNodes - faultyNodes;
 
