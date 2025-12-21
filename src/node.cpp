@@ -43,6 +43,10 @@ bool Node::getIsFaulty(){
     return this->isFaulty;
 }
 
+std::queue<int>& Node::getBuffer(){
+    return this->buffer;
+}
+
 void Node::print(){
     std::cout<<"Service state: "<<this->getServiceState() << ", Node id: "<< this->getNodeId() 
     << ", Current view: "<<this->getView() << ", Primary: "<<this->getIsPrimary() << ", Faulty: "
@@ -56,3 +60,17 @@ void Node::setSequenceNumber(PrePrepare& prePrepare){
     }
 }
 
+void Node::bufferRead(){
+    while(true){
+        
+        if( !this->buffer.empty() ){
+            int read = this->buffer.front();
+            
+            std::cout << "From node: " << this->getNodeId() << " has been read: " << read << std::endl;
+
+            buffer.pop();
+            //ejecutar algo
+            break;
+        }
+    }
+}
