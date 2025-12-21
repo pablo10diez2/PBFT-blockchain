@@ -1,22 +1,21 @@
 #pragma once
 
-#include <deque>
 #include "messageClass/request.h"
+#include "node.h"
+
 #include <iostream>
+#include <queue>
 
 class Client {
     private:
         static unsigned int counter;
         const unsigned int clientId;
-        std::deque<Request> clientBuffer;
 
     public:
         Client();
-        
         unsigned int getClientId();
-        unsigned int getBufferSize();
            
-        void addRequest(Request request);
         void print();
-        void printBuffer();
+
+        void makeRequest(Node& primaryNode);
 };

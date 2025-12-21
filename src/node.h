@@ -45,4 +45,5 @@ class Node {
         void print();
 
         void bufferRead();
+        void insertBuffer(int i);
 };

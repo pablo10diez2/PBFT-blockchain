@@ -26,32 +26,27 @@ void joinAll(thread& t){
     t.join();
 }
 
-void emit(queue<int>& q){
-    sleep(2);
-    q.push(100);
-}
-
 int main(){
     vector<Node> nodes;
     vector<thread> threads;
 
     initializeNodes(&nodes, totalNodes);
+    
+    Client client{};
+    client.makeRequest(*primaryNode);
 
     for(auto& node : nodes){
-        
         threads.emplace_back(
             [&node]() { node.bufferRead(); }                
         );
     }
 
-    for_each(nodes.begin(), nodes.end(), 
-                [](Node& n) { emit( n.getBuffer() ); }
-            );
-
     for_each(threads.begin(), threads.end(), joinAll);
 }
 
 void initializeNodes(vector<Node>* nodes, int totalNodes){
+    nodes->reserve(totalNodes);
+
     int faultyNodes = 10/3;
     int workingNodes = totalNodes - faultyNodes;
 

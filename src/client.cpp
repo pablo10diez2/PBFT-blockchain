@@ -8,18 +8,12 @@ unsigned int Client::getClientId(){
     return this->clientId;
 }
         
-unsigned int Client::getBufferSize(){
-    return this->clientBuffer.size();
-}
-           
-void Client::addRequest(Request request){
-    this->clientBuffer.push_back(request);
-}
-        
 void Client::print(){
     std::cout << "Client id: " << this->getClientId() << std::endl;
+}
+
+void Client::makeRequest(Node& primaryNode){
+    primaryNode.getBuffer().push(100);
     
-    for(int i=0; i < clientBuffer.size(); ++i){
-        clientBuffer[i].print();
-    }
+    std::cout << "Pushed from primary " << std::endl;
 }

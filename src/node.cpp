@@ -62,15 +62,17 @@ void Node::setSequenceNumber(PrePrepare& prePrepare){
 
 void Node::bufferRead(){
     while(true){
-        
         if( !this->buffer.empty() ){
             int read = this->buffer.front();
             
             std::cout << "From node: " << this->getNodeId() << " has been read: " << read << std::endl;
 
             buffer.pop();
-            //ejecutar algo
             break;
         }
     }
+}
+
+void Node::insertBuffer(int i){
+    this->buffer.push(i);
 }
