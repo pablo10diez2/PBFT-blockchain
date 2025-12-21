@@ -12,8 +12,7 @@ void Client::print(){
     std::cout << "Client id: " << this->getClientId() << std::endl;
 }
 
-void Client::makeRequest(Node& primaryNode){
-    primaryNode.getBuffer().push(100);
+void Client::makeRequest(Node& primaryNode, Transaction transaction){
+    primaryNode.getBuffer().push(transaction);
     
-    std::cout << "Pushed from primary " << std::endl;
 }

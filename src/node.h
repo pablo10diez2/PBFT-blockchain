@@ -6,6 +6,7 @@
 #include <queue>
 
 #include "messageClass/preprepare.h"
+#include "messageClass/transaction.h"
 
 enum State {
     off, request, prePrepare, prepare
@@ -24,7 +25,7 @@ class Node {
         std::vector<std::string> log;
         static unsigned int sequenceNumber;
 
-        std::queue<int> buffer;
+        std::queue<Transaction> buffer;
         
     public:
         Node(bool isFaulty, bool isPrimary);
@@ -40,10 +41,10 @@ class Node {
         unsigned int getView();
         bool getIsPrimary();
         bool getIsFaulty();
-        std::queue<int>& getBuffer();
+        std::queue<Transaction>& getBuffer();
 
         void print();
 
         void bufferRead();
-        void insertBuffer(int i);
+        void insertBuffer(Transaction transaction);
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "messageClass/request.h"
+#include "messageClass/transaction.h"
 #include "node.h"
 
 #include <iostream>
@@ -17,5 +18,5 @@ class Client {
            
         void print();
 
-        void makeRequest(Node& primaryNode);
+        void makeRequest(Node& primaryNode, Transaction transaction);
 };

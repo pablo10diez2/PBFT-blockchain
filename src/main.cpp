@@ -33,7 +33,11 @@ int main(){
     initializeNodes(&nodes, totalNodes);
     
     Client client{};
-    client.makeRequest(*primaryNode);
+
+    PrePrepare prePrepare{1, 1, 1};
+    Transaction transaction1{&prePrepare, 0};
+
+    client.makeRequest(*primaryNode, transaction1);
 
     for(auto& node : nodes){
         threads.emplace_back(

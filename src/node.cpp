@@ -43,7 +43,7 @@ bool Node::getIsFaulty(){
     return this->isFaulty;
 }
 
-std::queue<int>& Node::getBuffer(){
+std::queue<Transaction>& Node::getBuffer(){
     return this->buffer;
 }
 
@@ -63,9 +63,11 @@ void Node::setSequenceNumber(PrePrepare& prePrepare){
 void Node::bufferRead(){
     while(true){
         if( !this->buffer.empty() ){
-            int read = this->buffer.front();
+            Transaction t = this->buffer.front();
             
-            std::cout << "From node: " << this->getNodeId() << " has been read: " << read << std::endl;
+            std::cout << "From node: " << this->getNodeId() << " has been read: ";
+            t.print();
+            std::cout << "" << std::endl;
 
             buffer.pop();
             break;
@@ -73,6 +75,6 @@ void Node::bufferRead(){
     }
 }
 
-void Node::insertBuffer(int i){
-    this->buffer.push(i);
+void Node::insertBuffer(Transaction transaction){
+    this->buffer.push(transaction);
 }
