@@ -32,3 +32,6 @@ void PrePrepare::print(){
     << ", Message digest: " << this->getMessageDigest() << std::endl;
 }
 
+MsgType PrePrepare::getType(){
+    return MsgType::Type_PrePrepare;
+}

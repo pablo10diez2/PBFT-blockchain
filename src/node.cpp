@@ -1,3 +1,5 @@
+#include <string>
+
 #include "node.h"
 
 unsigned int Node::counter = 0;
@@ -64,10 +66,10 @@ void Node::bufferRead(){
     while(true){
         if( !this->buffer.empty() ){
             Transaction t = this->buffer.front();
-            
-            std::cout << "From node: " << this->getNodeId() << " has been read: ";
-            t.print();
-            std::cout << "" << std::endl;
+
+            int messageType = t.getMessage()->getType();
+
+            std::cout << messageType << std::endl;
 
             buffer.pop();
             break;

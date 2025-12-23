@@ -38,3 +38,7 @@ void Prepare::print(){
     ", View numbe: " << this->getViewNum() << ", Sequence number: " << this->getSequenceNum() 
     << ", Message digest: " << this->getMessageDigest() << ", Node id:" << this->getNodeId() << std::endl;
 }
+
+MsgType Prepare::getType(){
+    return MsgType::Type_Prepare;
+}

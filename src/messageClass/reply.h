@@ -24,4 +24,5 @@ class Reply : Message{
         bool getResult();
 
         void print();
+        MsgType getType();
 };

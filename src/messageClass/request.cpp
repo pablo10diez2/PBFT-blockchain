@@ -32,3 +32,6 @@ void Request::print(){
     << ", ClientId: " << this->getClientId() << std::endl;
 }
 
+MsgType Request::getType(){
+    return MsgType::Type_Request;
+}

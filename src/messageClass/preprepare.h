@@ -21,4 +21,5 @@ class PrePrepare : public Message{
         size_t getMessageDigest();
 
         void print();
+        MsgType getType();
     };

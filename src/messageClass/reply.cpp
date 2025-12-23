@@ -51,3 +51,7 @@ void Reply::print(){
     ", Result: " << this->getResult() <<
     std::endl;
 }
+
+MsgType Reply::getType(){
+    return MsgType::Type_Reply;
+}

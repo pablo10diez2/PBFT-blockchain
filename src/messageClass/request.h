@@ -21,4 +21,5 @@ class Request : public Message{
         unsigned int getClientId();
 
         void print();
+        MsgType getType();
 };

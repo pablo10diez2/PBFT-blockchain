@@ -22,4 +22,5 @@ class Commit : public Message{
         unsigned int getNodeId();
 
         void print();
+        MsgType getType();
 };
