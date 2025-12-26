@@ -1,7 +1,7 @@
 #pragma once
 
-#include "messageClass/request.h"
-#include "messageClass/transaction.h"
+#include "../messageClass/request.h"
+#include "../messageClass/transaction.h"
 #include "node.h"
 
 #include <iostream>

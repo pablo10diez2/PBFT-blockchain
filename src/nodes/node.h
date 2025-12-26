@@ -5,8 +5,8 @@
 #include <iostream>
 #include <queue>
 
-#include "messageClass/preprepare.h"
-#include "messageClass/transaction.h"
+#include "../messageClass/preprepare.h"
+#include "../messageClass/transaction.h"
 
 enum State {
     off, request, prePrepare, prepare

@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <queue>
 
-#include "node.h"
+#include "control.h"
+#include "nodes/node.h"
 #include "messageClass/message.h"
 #include "messageClass/request.h"
 #include "messageClass/preprepare.h"
@@ -13,7 +14,7 @@
 #include "messageClass/reply.h"
 #include "messageClass/commit.h"
 #include "messageClass/reply.h"
-#include "client.h"
+#include "nodes/client.h"
 
 using namespace std;
 
@@ -32,12 +33,7 @@ int main(){
 
     initializeNodes(&nodes, totalNodes);
     
-    Client client{};
-
-    PrePrepare prePrepare{1, 1, 1};
-    Transaction transaction1{&prePrepare, 0};
-
-    client.makeRequest(*primaryNode, transaction1);
+    thread clientThread(startClient, primaryNode);
 
     for(auto& node : nodes){
         threads.emplace_back(
@@ -45,6 +41,7 @@ int main(){
         );
     }
 
+    clientThread.join();
     for_each(threads.begin(), threads.end(), joinAll);
 }
 

@@ -1,4 +1,5 @@
 #include "client.h"
+#include <unistd.h>
 
 unsigned int Client::counter = 0;
 
@@ -14,5 +15,4 @@ void Client::print(){
 
 void Client::makeRequest(Node& primaryNode, Transaction transaction){
     primaryNode.getBuffer().push(transaction);
-    
 }
