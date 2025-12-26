@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <queue>
+#include <memory>
 
 #include "control.h"
 #include "nodes/node.h"
@@ -18,7 +19,7 @@
 
 using namespace std;
 
-void initializeNodes(vector<Node>* nodes, int totalNodes);
+void initializeNodes(vector<unique_ptr<Node>>* nodes, int totalNodes);
 
 unsigned int totalNodes = 10;
 Node* primaryNode;
@@ -28,16 +29,20 @@ void joinAll(thread& t){
 }
 
 int main(){
-    vector<Node> nodes;
+    vector<unique_ptr<Node>> nodes;
     vector<thread> threads;
 
     initializeNodes(&nodes, totalNodes);
+
+    Request request{0,0,0};
     
-    thread clientThread(startClient, primaryNode);
+    thread clientThread(startClient, primaryNode, &request);
 
     for(auto& node : nodes){
+        auto ptr = node.get();
+
         threads.emplace_back(
-            [&node]() { node.bufferRead(); }                
+            [ptr]() { ptr->bufferRead(); }                
         );
     }
 
@@ -45,7 +50,7 @@ int main(){
     for_each(threads.begin(), threads.end(), joinAll);
 }
 
-void initializeNodes(vector<Node>* nodes, int totalNodes){
+void initializeNodes(vector<unique_ptr<Node>>* nodes, int totalNodes){
     nodes->reserve(totalNodes);
 
     int faultyNodes = 10/3;
@@ -54,20 +59,25 @@ void initializeNodes(vector<Node>* nodes, int totalNodes){
     for(int i = 0; i < faultyNodes; ++i){
         bool isFaulty = true;
         bool isPrimary = false;
-        nodes->emplace_back(isFaulty, isPrimary);
+        
+        auto newNodePtr = make_unique<Node>(isFaulty, isPrimary);
+
+        nodes->push_back( move(newNodePtr) );
     }
 
     for(int i = 0; i < workingNodes; ++i){
         bool isFaulty = false;
         bool isPrimary = false;
+        unique_ptr<Node> newNodePtr;
         
         if(i == 0){
-            nodes->emplace_back(isFaulty, !isPrimary);
-            primaryNode = &(nodes->back());
+            newNodePtr = make_unique<Node>(isFaulty, !isPrimary);
+            primaryNode = newNodePtr.get();
         }
 
         else{
-            nodes->emplace_back(isFaulty, isPrimary);
+            newNodePtr = make_unique<Node>(isFaulty, isPrimary);
         }
+        nodes->push_back( move(newNodePtr) );
     }
 }

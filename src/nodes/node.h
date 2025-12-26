@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <queue>
+#include <mutex>
 
 #include "../messageClass/preprepare.h"
 #include "../messageClass/transaction.h"
@@ -18,17 +19,17 @@ class Node {
         const unsigned int nodeId;
         static unsigned int counter;
         unsigned int view;
-
         bool isPrimary;
         bool isFaulty;
-
         std::vector<std::string> log;
         static unsigned int sequenceNumber;
 
         std::queue<Transaction> buffer;
+        std::mutex mutex;
         
     public:
         Node(bool isFaulty, bool isPrimary);
+
         
         void setServiceState(State serviceState);
         void setView(unsigned int view);
@@ -42,6 +43,7 @@ class Node {
         bool getIsPrimary();
         bool getIsFaulty();
         std::queue<Transaction>& getBuffer();
+        std::mutex& getMutex();
 
         void print();
 

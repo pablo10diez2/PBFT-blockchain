@@ -4,4 +4,4 @@
 #include "nodes/client.h"
 #include "messageClass/transaction.h"
 
-void startClient(Node* primaryNode);
+void startClient(Node* primaryNode, Request* request);
