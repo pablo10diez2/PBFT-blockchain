@@ -36,9 +36,6 @@ int main(){
 
     Request request{0,0,0};
     
-    thread clientThread(startClient, primaryNode, &request);
-
-    /*
     for(auto& node : nodes){
         auto ptr = node.get();
         
@@ -46,9 +43,8 @@ int main(){
             [ptr]() { ptr->bufferRead(); }                
         );
     }
-    */
     
-    primaryNode->bufferRead();
+    thread clientThread(startClient, primaryNode);
 
     clientThread.join();
     for_each(threads.begin(), threads.end(), joinAll);

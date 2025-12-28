@@ -8,7 +8,11 @@ class Transaction {
         int signature;
     
     public:
+        Transaction();
         Transaction(Message* message, int signature);
+        
+        void setMessage(Message* message);
+        void setSignature(int signature);
 
         Message* getMessage();
         int getSignature();

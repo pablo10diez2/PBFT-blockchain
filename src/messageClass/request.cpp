@@ -1,12 +1,14 @@
 #include "request.h"
 
 Request::Request(bool op, unsigned int ts, unsigned int cId) : operation(op), timestamp(ts), clientId(cId) {}
-        
+  
+Request::Request() : operation(0), timestamp( time(nullptr) ), clientId(0) {}
+
 void Request::setOperation(bool operation){
     this->operation = operation;
 }
         
-void Request::setTimestamp(unsigned int timestamp){
+void Request::setTimestamp(std::time_t timestamp){
     this->timestamp = timestamp;
 }
         
@@ -18,7 +20,7 @@ bool Request::getOperation(){
     return this->operation;
 }
         
-unsigned int Request::getTimestamp(){
+std::time_t Request::getTimestamp(){
     return this->timestamp;
 }
         
