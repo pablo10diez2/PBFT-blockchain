@@ -15,10 +15,8 @@ void Client::print(){
 
 void Client::makeRequest(Node& primaryNode, Transaction transaction){
     primaryNode.getMutex().lock();
-    std::cout << "locked" << std::endl;
 
     primaryNode.getBuffer().push(transaction);
 
     primaryNode.getMutex().unlock();
-    std::cout << "unlocked" << std::endl;
 }

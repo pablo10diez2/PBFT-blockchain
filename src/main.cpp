@@ -38,13 +38,17 @@ int main(){
     
     thread clientThread(startClient, primaryNode, &request);
 
+    /*
     for(auto& node : nodes){
         auto ptr = node.get();
-
+        
         threads.emplace_back(
             [ptr]() { ptr->bufferRead(); }                
         );
     }
+    */
+    
+    primaryNode->bufferRead();
 
     clientThread.join();
     for_each(threads.begin(), threads.end(), joinAll);
