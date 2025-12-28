@@ -2,7 +2,7 @@
 
 Request::Request(bool op, unsigned int ts, unsigned int cId) : operation(op), timestamp(ts), clientId(cId) {}
   
-Request::Request() : operation(0), timestamp( time(nullptr) ), clientId(0) {}
+Request::Request() : operation(false), timestamp( time(nullptr) ), clientId(0) {}
 
 void Request::setOperation(bool operation){
     this->operation = operation;

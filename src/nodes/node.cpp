@@ -71,15 +71,11 @@ void Node::bufferRead(){
     while(true){
         sleep(1);
         this->mutex.lock();
-        std::cout << "bufffer locked" << std::endl;
-        if( !this->buffer.empty() ){
-            std::cout << "recibido" << std::endl;
 
+        if( !this->buffer.empty() ){
             Transaction t = this->buffer.front();
 
-            int messageType = t.getMessage()->getType();
-
-            std::cout << messageType << std::endl;
+            t.getMessage()->print();
 
             buffer.pop();
 
@@ -88,7 +84,6 @@ void Node::bufferRead(){
         }
 
         this->mutex.unlock();
-        std::cout << "buffer unlocked" << std::endl;
     }
 }
 

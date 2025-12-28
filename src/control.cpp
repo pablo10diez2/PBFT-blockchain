@@ -5,7 +5,7 @@ void startClient(Node* primaryNode){
     unsigned int clientId = client.getClientId();
 
     Request request{};
-    request.setOperation(1);
+    request.setOperation(true);
     request.setTimestamp( std::time(nullptr) );
     request.setClientId( clientId );
     
@@ -14,5 +14,12 @@ void startClient(Node* primaryNode){
     transaction.setSignature(777);
 
     client.makeRequest(*primaryNode, transaction);
+    
+    waitResponse();
+}
+
+void waitResponse(){
+    while(true){
+    }
 }
 
