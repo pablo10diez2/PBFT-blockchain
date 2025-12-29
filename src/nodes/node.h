@@ -49,4 +49,5 @@ class Node {
 
         void bufferRead();
         void insertBuffer(Transaction transaction);
+        void handleTransaction(Transaction transaction);
 };

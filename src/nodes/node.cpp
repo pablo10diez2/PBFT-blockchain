@@ -77,6 +77,8 @@ void Node::bufferRead(){
 
             t.getMessage()->print();
 
+            this->handleTransaction(t);
+
             buffer.pop();
 
             this->mutex.unlock();
@@ -89,4 +91,13 @@ void Node::bufferRead(){
 
 void Node::insertBuffer(Transaction transaction){
     this->buffer.push(transaction);
+}
+
+void Node::handleTransaction(Transaction transaction){
+    Message* message = transaction.getMessage();
+    MsgType type = message->getType();
+
+    if( type == MsgType::Type_Request ){
+        std::cout << "amazing request arrived" << std::endl;
+    }
 }
