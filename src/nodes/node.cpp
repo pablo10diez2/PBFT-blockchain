@@ -60,10 +60,10 @@ void Node::print(){
         << this->getIsFaulty()<<std::endl;
 }
 
-void Node::setSequenceNumber(PrePrepare& prePrepare){
+void Node::setSequenceNumber(PrePrepare* prePrepare){
     if(isPrimary){
         this->sequenceNumber++;
-        prePrepare.setSequenceNum(this->sequenceNumber);
+        prePrepare->setSequenceNum(this->sequenceNumber);
     }
 }
 
@@ -97,7 +97,21 @@ void Node::handleTransaction(Transaction transaction){
     Message* message = transaction.getMessage();
     MsgType type = message->getType();
 
-    if( type == MsgType::Type_Request ){
-        std::cout << "amazing request arrived" << std::endl;
+    switch(type){
+        
+        case(MsgType::Type_Request):
+            //check signature...
+
+            createPrePrepare();    
     }
+}
+
+void Node::createPrePrepare(){
+    PrePrepare prePrepare{};
+    
+    prePrepare.setViewNum(10);
+    setSequenceNumber(&prePrepare);
+    prePrepare.setMessageDigest(888);
+
+    prePrepare.print();
 }

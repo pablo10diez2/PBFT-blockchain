@@ -1,5 +1,7 @@
 #include "preprepare.h"
 
+PrePrepare::PrePrepare() : viewNum(0), sequenceNum(0), messageDigest(0) {}
+
 PrePrepare::PrePrepare(unsigned int vNum, unsigned int seqNum, size_t msgDigest) : viewNum(vNum), sequenceNum(seqNum), messageDigest(msgDigest) {}
         
 void PrePrepare::setViewNum(unsigned int viewNum){
@@ -28,10 +30,12 @@ size_t PrePrepare::getMessageDigest(){
 
 void PrePrepare::print(){
     std::cout << "MessageId: " << this->Message::getMessageId() << ", Type: PrePrepare" << 
-    ", View numbe: " << this->getViewNum() << ", Sequence number: " << this->getSequenceNum() 
+    ", View number: " << this->getViewNum() << ", Sequence number: " << this->getSequenceNum() 
     << ", Message digest: " << this->getMessageDigest() << std::endl;
 }
 
 MsgType PrePrepare::getType(){
     return MsgType::Type_PrePrepare;
 }
+
+

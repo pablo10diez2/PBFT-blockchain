@@ -35,7 +35,7 @@ class Node {
         void setView(unsigned int view);
         void setIsPrimary(bool primary);
         void setIsFaulty(bool faulty);
-        void setSequenceNumber(PrePrepare&);
+        void setSequenceNumber(PrePrepare*);
 
         State getServiceState();
         unsigned int getNodeId();
@@ -50,4 +50,5 @@ class Node {
         void bufferRead();
         void insertBuffer(Transaction transaction);
         void handleTransaction(Transaction transaction);
+        void createPrePrepare();
 };

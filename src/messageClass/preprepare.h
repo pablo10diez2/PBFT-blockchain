@@ -10,6 +10,7 @@ class PrePrepare : public Message{
         size_t messageDigest;
 
     public:
+        PrePrepare();
         PrePrepare(unsigned int viewNum, unsigned int sequenceNum, size_t messageDigest);
         
         void setViewNum(unsigned int viewNum);
