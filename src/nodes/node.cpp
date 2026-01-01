@@ -80,7 +80,7 @@ void Node::bufferRead(){
             t.getMessage()->print();
             std::cout << "-----------------------" << std::endl;
 
-            this->handleTransaction(t);
+            handleTransaction(t, *this);
 
             buffer.pop();
 
@@ -96,29 +96,6 @@ void Node::insertBuffer(Transaction transaction){
     this->buffer.push(transaction);
 }
 
-void Node::handleTransaction(Transaction transaction){
-    Message* message = transaction.getMessage();
-    MsgType type = message->getType();
-
-    switch(type){
-        
-        case(MsgType::Type_Request):
-            //check signature...
-
-            createPrePrepare();    
-    }
-}
-
-void Node::createPrePrepare(){
-    if(isPrimary){
-        setNodePhase(prePrepare);
-
-        PrePrepare prePrepare{};
-    
-        prePrepare.setViewNum(10);
-        setSequenceNumber(&prePrepare);
-        prePrepare.setMessageDigest(888);
-
-        prePrepare.print();
-    }
+void Node::multicast(){
+    //sends a transaction to every node's buffer except to itself
 }

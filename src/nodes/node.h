@@ -8,6 +8,7 @@
 
 #include "../messageClass/preprepare.h"
 #include "../messageClass/transaction.h"
+#include "../control.h"
 
 enum Phase {
     off, prePrepare, prepare,
@@ -49,6 +50,5 @@ class Node {
 
         void bufferRead();
         void insertBuffer(Transaction transaction);
-        void handleTransaction(Transaction transaction);
-        void createPrePrepare();
+        void multicast();
 };

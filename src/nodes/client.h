@@ -2,7 +2,8 @@
 
 #include "../messageClass/request.h"
 #include "../messageClass/transaction.h"
-#include "node.h"
+
+class Node;
 
 #include <iostream>
 #include <queue>
