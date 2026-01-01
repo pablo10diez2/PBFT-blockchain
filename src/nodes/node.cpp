@@ -7,11 +7,11 @@ unsigned int Node::counter = 0;
 unsigned int Node::sequenceNumber = 0;
 
 Node::Node(bool isFlt, bool isPrm)
-         : serviceState(State::off), nodeId(counter++), view(0),
+         : nodePhase(Phase::off), nodeId(counter++), view(0),
            isPrimary(isPrm), isFaulty(isFlt) {}
 
-void Node::setServiceState(State serviceState){
-    this->serviceState = serviceState;
+void Node::setNodePhase(Phase phase){
+    this->nodePhase = phase;
 }
 
 void Node::setView(unsigned int view){
@@ -26,8 +26,8 @@ void Node::setIsFaulty(bool faulty){
     this->isFaulty = faulty;
 }
 
-State Node::getServiceState(){
-    return this->serviceState;
+Phase Node::getNodePhase(){
+    return this->nodePhase;
 }
         
 unsigned int Node::getNodeId(){
@@ -55,7 +55,7 @@ std::mutex& Node::getMutex(){
 }
 
 void Node::print(){
-    std::cout<<"Service state: "<<this->getServiceState() << ", Node id: "<< this->getNodeId() 
+    std::cout<<"Service state: "<<this->getNodePhase() << ", Node id: "<< this->getNodeId() 
     << ", Current view: "<<this->getView() << ", Primary: "<<this->getIsPrimary() << ", Faulty: "
         << this->getIsFaulty()<<std::endl;
 }
@@ -74,8 +74,11 @@ void Node::bufferRead(){
 
         if( !this->buffer.empty() ){
             Transaction t = this->buffer.front();
-
+            
+            std::cout << "From node: ";
+            print();
             t.getMessage()->print();
+            std::cout << "-----------------------" << std::endl;
 
             this->handleTransaction(t);
 
@@ -107,11 +110,15 @@ void Node::handleTransaction(Transaction transaction){
 }
 
 void Node::createPrePrepare(){
-    PrePrepare prePrepare{};
-    
-    prePrepare.setViewNum(10);
-    setSequenceNumber(&prePrepare);
-    prePrepare.setMessageDigest(888);
+    if(isPrimary){
+        setNodePhase(prePrepare);
 
-    prePrepare.print();
+        PrePrepare prePrepare{};
+    
+        prePrepare.setViewNum(10);
+        setSequenceNumber(&prePrepare);
+        prePrepare.setMessageDigest(888);
+
+        prePrepare.print();
+    }
 }

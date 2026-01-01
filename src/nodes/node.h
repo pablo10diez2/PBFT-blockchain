@@ -9,13 +9,13 @@
 #include "../messageClass/preprepare.h"
 #include "../messageClass/transaction.h"
 
-enum State {
-    off, request, prePrepare, prepare
+enum Phase {
+    off, prePrepare, prepare,
 };
 
 class Node {
     private:
-        State serviceState;
+        Phase nodePhase;
         const unsigned int nodeId;
         static unsigned int counter;
         unsigned int view;
@@ -31,13 +31,13 @@ class Node {
         Node(bool isFaulty, bool isPrimary);
 
         
-        void setServiceState(State serviceState);
+        void setNodePhase(Phase phase);
         void setView(unsigned int view);
         void setIsPrimary(bool primary);
         void setIsFaulty(bool faulty);
         void setSequenceNumber(PrePrepare*);
 
-        State getServiceState();
+        Phase getNodePhase();
         unsigned int getNodeId();
         unsigned int getView();
         bool getIsPrimary();
