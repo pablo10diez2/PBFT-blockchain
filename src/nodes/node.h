@@ -28,6 +28,7 @@ class Node {
         std::queue<Transaction> buffer;
         std::mutex mutex;
         
+        
     public:
         Node(bool isFaulty, bool isPrimary);
 

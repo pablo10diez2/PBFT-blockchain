@@ -2,6 +2,9 @@
 #include "nodes/node.h"
 
 void startClient(Node* primaryNode){
+
+    std::cout << "[CLIENT] Client started"<< std::endl;
+
     Client client{};
     unsigned int clientId = client.getClientId();
 
@@ -13,6 +16,8 @@ void startClient(Node* primaryNode){
     Transaction transaction{};
     transaction.setMessage( &request );
     transaction.setSignature(777);
+    
+    std::cout << "[CLIENT] Client request made to primary" << std::endl;
 
     client.makeRequest(*primaryNode, transaction);
     
@@ -31,6 +36,7 @@ void handleTransaction(Transaction transaction, Node& node){
     switch(type){
         
         case(MsgType::Type_Request):
+            std::cout << "[HANDLER] Request transaction handling" << std::endl;
             //check signature...
 
             createPrePrepare(node);    
@@ -46,7 +52,7 @@ void createPrePrepare(Node& node){
         prePrepare.setViewNum(10);
         node.setSequenceNumber(&prePrepare);
         prePrepare.setMessageDigest(888);
-
-        prePrepare.print();
+        
+        std::cout << "[PREPREPARE] PrePrepare created" << std::endl;
     }
 }

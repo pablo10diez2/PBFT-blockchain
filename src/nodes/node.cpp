@@ -75,10 +75,9 @@ void Node::bufferRead(){
         if( !this->buffer.empty() ){
             Transaction t = this->buffer.front();
             
-            std::cout << "From node: ";
+            std::cout << "[NODE BUFFER] Transaction reached to node: ";
             print();
             t.getMessage()->print();
-            std::cout << "-----------------------" << std::endl;
 
             handleTransaction(t, *this);
 
