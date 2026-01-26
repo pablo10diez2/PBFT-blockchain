@@ -28,7 +28,6 @@ class Node {
         std::queue<Transaction> buffer;
         std::mutex mutex;
         
-        
     public:
         Node(bool isFaulty, bool isPrimary);
 
@@ -51,5 +50,5 @@ class Node {
 
         void bufferRead();
         void insertBuffer(Transaction transaction);
-        void multicast();
+        void multicast(vector<unique_ptr<Node>>& nodes);
 };

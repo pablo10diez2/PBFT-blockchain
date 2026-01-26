@@ -1,23 +1,28 @@
 #include "control.h"
 #include "nodes/node.h"
 
-void startClient(Node* primaryNode){
+using namespace std;
 
-    std::cout << "[CLIENT] Client started"<< std::endl;
+vector<unique_ptr<Node>>* globalNodes;
+
+void startClient(Node* primaryNode, vector<unique_ptr<Node>> nodes){
+    globalNodes = &nodes;
+
+    cout << "[CLIENT] Client started"<< endl;
 
     Client client{};
     unsigned int clientId = client.getClientId();
 
     Request request{};
     request.setOperation(true);
-    request.setTimestamp( std::time(nullptr) );
+    request.setTimestamp(time(nullptr) );
     request.setClientId( clientId );
     
     Transaction transaction{};
     transaction.setMessage( &request );
     transaction.setSignature(777);
     
-    std::cout << "[CLIENT] Client request made to primary" << std::endl;
+    cout << "[CLIENT] Client request made to primary" << endl;
 
     client.makeRequest(*primaryNode, transaction);
     
@@ -36,7 +41,7 @@ void handleTransaction(Transaction transaction, Node& node){
     switch(type){
         
         case(MsgType::Type_Request):
-            std::cout << "[HANDLER] Request transaction handling" << std::endl;
+            cout << "[HANDLER] Request transaction handling" << endl;
             //check signature...
 
             createPrePrepare(node);    
@@ -53,6 +58,7 @@ void createPrePrepare(Node& node){
         node.setSequenceNumber(&prePrepare);
         prePrepare.setMessageDigest(888);
         
-        std::cout << "[PREPREPARE] PrePrepare created" << std::endl;
+        cout << "[PREPREPARE] PrePrepare created" << endl;
+        node.multicast(*globalNodes);
     }
 }

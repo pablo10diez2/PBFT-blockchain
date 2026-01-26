@@ -19,7 +19,7 @@
 
 using namespace std;
 
-void initializeNodes(vector<unique_ptr<Node>>* nodes, int totalNodes);
+void initNodes(vector<unique_ptr<Node>>* nodes, int totalNodes);
 
 unsigned int totalNodes = 10;
 Node* primaryNode;
@@ -32,10 +32,8 @@ int main(){
     vector<unique_ptr<Node>> nodes;
     vector<thread> threads;
 
-    initializeNodes(&nodes, totalNodes);
+    initNodes(&nodes, totalNodes);
 
-    Request request{0,0,0};
-    
     for(auto& node : nodes){
         auto ptr = node.get();
         
@@ -44,13 +42,13 @@ int main(){
         );
     }
     
-    thread clientThread(startClient, primaryNode);
+    thread clientThread(startClient, primaryNode, move(nodes));
 
     clientThread.join();
     for_each(threads.begin(), threads.end(), joinAll);
 }
 
-void initializeNodes(vector<unique_ptr<Node>>* nodes, int totalNodes){
+void initNodes(vector<unique_ptr<Node>>* nodes, int totalNodes){
     nodes->reserve(totalNodes);
 
     int faultyNodes = 10/3;
