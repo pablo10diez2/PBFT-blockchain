@@ -50,5 +50,5 @@ class Node {
 
         void bufferRead();
         void insertBuffer(Transaction transaction);
-        void multicast(vector<unique_ptr<Node>>& nodes);
+        void multicast(vector<unique_ptr<Node>>& nodes, Transaction transaction);
 };

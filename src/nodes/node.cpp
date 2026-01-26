@@ -95,12 +95,12 @@ void Node::insertBuffer(Transaction transaction){
     this->buffer.push(transaction);
 }
 
-void Node::multicast(vector<unique_ptr<Node>>& nodes){
+void Node::multicast(vector<unique_ptr<Node>>& nodes, Transaction transaction){
     for(auto& node: nodes){
         auto nodePtr = node.get();
 
         if( this->getNodeId() != nodePtr->getNodeId() ){
-            cout << "sending..." << endl;
+            nodePtr->insertBuffer(transaction);
         }
     }
 }

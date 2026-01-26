@@ -44,7 +44,10 @@ void handleTransaction(Transaction transaction, Node& node){
             cout << "[HANDLER] Request transaction handling" << endl;
             //check signature...
 
-            createPrePrepare(node);    
+            createPrePrepare(node);
+
+        case(MsgType::Type_PrePrepare):
+            cout << " " << endl;
     }
 }
 
@@ -57,8 +60,15 @@ void createPrePrepare(Node& node){
         prePrepare.setViewNum(10);
         node.setSequenceNumber(&prePrepare);
         prePrepare.setMessageDigest(888);
+
+        Transaction transaction{};
+        transaction.setMessage(&prePrepare);
+        transaction.setSignature(111);
         
         cout << "[PREPREPARE] PrePrepare created" << endl;
-        node.multicast(*globalNodes);
+
+        node.multicast(*globalNodes, transaction);
+
+        waitResponse();
     }
 }
